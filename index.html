@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>忏悔室 · Confessional</title>
+<meta name="description" content="一间没有名字、没有记录的忏悔室。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 常驻烛火：贯穿全程的信物。风格是刻意"不写实"的手绘线稿剪影，
+       不用光影渐变去模拟真实火焰，而是像木刻版画一样的扁平图形。 -->
+  <div class="candle" id="candle" aria-hidden="true">
+    <div class="candle-glow"></div>
+    <svg class="candle-flame" viewBox="0 0 40 70" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="wobble" x="-60%" y="-60%" width="220%" height="220%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.02 0.09" numOctaves="2" seed="7" result="noise">
+            <animate attributeName="baseFrequency" dur="7s" values="0.02 0.09;0.035 0.13;0.02 0.09" repeatCount="indefinite"/>
+          </feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.5"/>
+        </filter>
+      </defs>
+      <g filter="url(#wobble)">
+        <path class="flame-outline" d="M20 4 L26 22 L34 40 Q36 52 26 62 L20 67 L14 62 Q4 52 6 40 L14 22 Z"/>
+        <path class="flame-inner" d="M20 30 L23 40 Q25 50 20 58 L17 55 Q13 48 15 40 Z"/>
+      </g>
+    </svg>
+    <div class="candle-body"></div>
+  </div>
+
+  <!-- 屏 1：开机 -->
+  <section class="screen" id="screen-boot">
+    <p class="boot-hint" id="boot-hint">点一盏烛，进入</p>
+  </section>
+
+  <!-- 屏 2：引导 -->
+  <section class="screen" id="screen-guide">
+    <div class="guide-lines" id="guide-lines">
+      <p class="line" data-text="这里没有名字，没有记录。"></p>
+      <p class="line" data-text="你说出的话，只有烛火听见。"></p>
+      <p class="line" data-text="说完之后，它会替你带走。"></p>
+    </div>
+    <button class="btn" id="btn-enter">进入</button>
+  </section>
+
+  <!-- 屏 3：忏悔 -->
+  <section class="screen" id="screen-confess">
+    <div class="grille" aria-hidden="true"></div>
+    <div class="confess-wrap">
+      <p class="prompt">说出你想说的。</p>
+      <textarea id="confess-input" class="confess-input" placeholder="……" rows="6" maxlength="600"></textarea>
+      <div class="confess-foot">
+        <span class="count" id="char-count">0 / 600</span>
+        <button class="btn small" id="btn-submit" disabled>说出口</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 屏 4：焚去（过渡） -->
+  <section class="screen" id="screen-burning">
+    <p class="burning-text" id="burning-echo"></p>
+    <p class="burning-hint">沉默中……</p>
+  </section>
+
+  <!-- 屏 5：抽签 -->
+  <section class="screen" id="screen-lots">
+    <p class="lots-hint" id="lots-hint">抽一支签</p>
+    <div class="slips" id="slips">
+      <div class="slip"></div>
+      <div class="slip"></div>
+      <div class="slip"></div>
+    </div>
+    <div class="verse" id="verse-box">
+      <p class="verse-text" id="verse-text"></p>
+      <p class="verse-theme" id="verse-theme"></p>
+    </div>
+  </section>
+
+  <!-- 屏 6：回声（AI 回应位） -->
+  <section class="screen" id="screen-echo">
+    <p class="echo-label" id="echo-label">回声</p>
+    <p class="echo-text" id="echo-text"></p>
+    <button class="btn" id="btn-continue">继续</button>
+  </section>
+
+  <!-- 屏 7：结束 -->
+  <section class="screen" id="screen-end">
+    <p class="end-text">烛火摇了摇，像是点头。</p>
+    <div class="end-actions">
+      <button class="btn small" id="btn-again">再说一次</button>
+      <button class="btn small ghost" id="btn-leave">离开</button>
+    </div>
+  </section>
+
+  <!-- 屏 8：安心离开 -->
+  <section class="screen" id="screen-farewell">
+    <p class="farewell-text">烛火已熄，明天再见。</p>
+  </section>
+
+<script src="verses.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
